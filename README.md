@@ -3,51 +3,51 @@
 [![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=29)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-**Shelpik** — это универсальный инструмент для Android, объединяющий в себе функционал макросов, твикера и APK-редактора. Проект не требует высокопроизводительного устройства и работает на API 29 и выше.
+**Shelpik** is a versatile tool for Android that combines the functionality of a macro tool, a tweaker, and an APK editor. The project does not require a high-performance device and works on API 29 and above.
 
-> Если грубо говоря, это просто настройки в другой оболочке :)
+> Simply put, it's just a settings menu in a different shell :)
 
 ---
 
-### 📖 О проекте
+### 📖 About the Project
 
-Shelpik родился как "солянка" из различных полезных функций для кастомизации и оптимизации Android-устройств. В одном приложении вы найдете:
+Shelpik started as a "hodgepodge" of various useful functions for customizing and optimizing Android devices. In one app, you will find:
 
-*   **Макросы:** Автоматизация повторяющихся действий.
-*   **Твикер:** Настройка системы под себя.
-*   **APK-редактор:** Базовое редактирование и анализ APK-файлов.
+*   **Macros:** Automation of repetitive actions.
+*   **Tweaker:** Customizing the system to your liking.
+*   **APK Editor:** Basic editing and analysis of APK files.
 
-### ⚙️ Технические детали
+### ⚙️ Technical Details
 
-*   **Минимальный SDK:** Android 9.0 (API 29)
-*   **Язык:** Котлин/Java (укажи свой)
-*   **Зависимости:** (Здесь ты можешь перечислить ключевые библиотеки, которые используешь, например, Room, Retrofit и т.д.)
+*   **Min SDK:** Android 9.0 (API 29)
+*   **Language:** Kotlin
+*   **Dependencies:** None yet
 
-### 🚀 Установка и сборка
+### 🚀 Installation and Build
 
-1.  Склонируй репозиторий:
+1.  Clone the repository:
     ```bash
-    git clone https://github.com/ВАШ_НИКНЕЙМ/shelpik.git
+    git clone https://github.com/holayzz/shelpik.git
     ```
-2.  Открой проект в **Android Studio**.
-3.  Дождись завершения синхронизации Gradle.
-4.  Собери APK или запусти проект на подключенном устройстве/эмуляторе.
+2.  Open the project in **Android Studio**.
+3.  Wait for the Gradle sync to complete.
+4.  Build the APK or run the project on a connected device/emulator.
 
-### 📄 Лицензия
+### 📄 License
 
-Этот проект распространяется под лицензией **MIT**.
-Это означает, что вы можете:
-- Свободно форкать, использовать, копировать и модифицировать код.
-- Использовать код в коммерческих целях.
+This project is distributed under the **MIT License**.
+This means you are free to:
+- Fork, use, copy, and modify the code.
+- Use the code for commercial purposes.
 
-При условии, что вы:
-- Укажете авторство исходного проекта (ссылку на этот репозиторий).
-- Не будете выдавать исходный код Shelpik за свой собственный.
+Under the condition that you:
+- Attribute the original project (provide a link to this repository).
+- Do not present the Shelpik source code as your own.
 
-Полный текст лицензии доступен в файле [LICENSE](LICENSE).
+The full license text is available in the [LICENSE](LICENSE) file.
 
 ---
 
-### 🤝 Благодарности
+### 🤝 Acknowledgments
 
-Спасибо сообществу Open Source за вдохновение и все те библиотеки, что сделали этот проект возможным.
+Thanks to the Open Source community for the inspiration and all the libraries that made this project possible.
