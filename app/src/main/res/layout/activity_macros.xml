@@ -9,41 +9,39 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Shelpik"
-        android:textSize="28sp"
+        android:text="Макросы"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:textColor="#333333" />
 
     <Button
-        android:id="@+id/btnMacros"
+        android:id="@+id/btnAddMacro"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Макросы"
-        android:textSize="18sp"
+        android:text="Добавить макрос"
+        android:textSize="16sp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#2196F3"
         android:textColor="#FFFFFF" />
 
-    <Button
-        android:id="@+id/btnTweaker"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Твикер"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF" />
+        android:layout_height="wrap_content"
+        android:text="Активные макросы:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        android:textColor="#666666" />
 
-    <Button
-        android:id="@+id/btnApkEditor"
+    <ListView
+        android:id="@+id/macrosListView"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="APK Editor"
-        android:textSize="18sp"
-        android:backgroundTint="#FF9800"
-        android:textColor="#FFFFFF" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:divider="#eeeeee"
+        android:dividerHeight="1dp" />
 
 </LinearLayout>
