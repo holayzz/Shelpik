@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="| APK Editor |"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loading apps..."
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/text_secondary_dark" />
+
+        <ListView
+            android:id="@+id/appsListView"
+            android:layout_width="match_parent"
+            android:layout_height="540dp"
+            android:background="@color/surface_light_dark"
+            android:divider="@color/surface_dark"
+            android:dividerHeight="1dp" />
+
+        <Button
+            android:id="@+id/btnBack"
+            style="@style/RoundedButton"
+            android:layout_width="364dp"
+            android:layout_height="41dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="← Back"
+            android:textColor="@color/background_dark"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

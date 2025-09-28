@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="| Macros |"
+            android:textColor="@color/text_primary_dark"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            style="@style/RoundedCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnAddMacro"
+                style="@style/RoundedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/surface_light_dark"
+                android:text="➕ Add Macro"
+                android:textColor="@color/text_primary_dark"
+                android:textSize="16sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Active Macros:"
+            android:textColor="@color/text_secondary_dark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/macrosListView"
+            android:layout_width="match_parent"
+            android:layout_height="455dp"
+            android:background="@color/surface_light_dark"
+            android:divider="@color/surface_dark"
+            android:dividerHeight="1dp" />
+
+        <Button
+            android:id="@+id/btnBack"
+            style="@style/RoundedButton"
+            android:layout_width="364dp"
+            android:layout_height="41dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="← Back"
+            android:textColor="@color/background_dark"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="| Tweaker |"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"
+            android:textColor="@color/text_primary_dark" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/RoundedCard"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnEnableDevOptions"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="🔧 Enable Developer Options"
+                android:textSize="16sp"
+                android:backgroundTint="@color/surface_light_dark"
+                android:textColor="@color/text_primary_dark"
+                style="@style/RoundedButton" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/RoundedCard">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Click the button to enable developer options"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:textColor="@color/text_secondary_dark"
+                    android:lineSpacingExtra="4dp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnBack"
+            style="@style/RoundedButton"
+            android:layout_width="345dp"
+            android:layout_height="41dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="← Back"
+            android:textColor="@color/background_dark"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
