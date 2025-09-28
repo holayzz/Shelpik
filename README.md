@@ -1,5 +1,5 @@
 # Shelpik
-## NOT RELEASED... YET
+## NOT RELEASED... YET!
 
 [![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=29)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -7,6 +7,7 @@
 **Shelpik** is a versatile tool for Android that combines the functionality of a macro tool, a tweaker, and an APK editor. The project does not require a high-performance device and works on API 29 and above.
 
 > Simply put, it's just a settings menu in a different shell :)
+> And its my first project on kotlin lol
 
 ---
 
@@ -14,15 +15,15 @@
 
 Shelpik started as a "hodgepodge" of various useful functions for customizing and optimizing Android devices. In one app, you will find:
 
-*   **Macros:** Automation of repetitive actions.
-*   **Tweaker:** Customizing the system to your liking.
-*   **APK Editor:** Basic editing and analysis of APK files.
+*   **Macros:** Automation of repetitive actions. - in dev
+*   **Tweaker:** Customizing the system to your liking. - in dev
+*   **APK Editor:** Basic editing and analysis of APK files. - in dev
 
 ### ⚙️ Technical Details
 
 *   **Min SDK:** Android 9.0 (API 29)
 *   **Language:** Kotlin
-*   **Dependencies:** None yet
+*   **Dependencies:** Core KTX, AppCompat, Material Design, ConstraintLayout, CardView, Material3
 
 ### 🚀 Installation and Build
 
