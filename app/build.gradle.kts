@@ -9,8 +9,8 @@ android {
 
     defaultConfig {
         applicationId = "com.holayzz.github.shelpik"
-        minSdk = 29
-        targetSdk = 34
+        minSdk = 28 // bro i forgot its 9.0+, not 10.0+
+        targetSdk = 36
         versionCode = 1
         versionName = "a0"
     }
