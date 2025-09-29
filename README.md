@@ -21,7 +21,7 @@ Shelpik started as a "hodgepodge" of various useful functions for customizing an
 
 ### ⚙️ Technical Details
 
-*   **Min SDK:** Android 9.0 (API 29)
+*   **Min SDK:** Android 9.0 (API 28)
 *   **Language:** Kotlin
 *   **Dependencies:** Core KTX, AppCompat, Material Design, ConstraintLayout, CardView, Material3
 
