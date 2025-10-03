@@ -1,14 +1,14 @@
 package com.holayzz.github.shelpik
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
-import androidx.compose.material3.Button
 import android.widget.Button
-import androidx.appcompat.widget.AppCompatButton
+import androidx.core.net.toUri
 
 class ApkEditorActivity : AppCompatActivity() {
 
@@ -30,6 +30,7 @@ class ApkEditorActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loadInstalledApps() {
         val packageManager = packageManager
         val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
@@ -64,7 +65,7 @@ class ApkEditorActivity : AppCompatActivity() {
             val apkFile = java.io.File(app.sourceDir)
             val sizeInMB = apkFile.length() / (1024 * 1024)
             "%.2f MB".format(sizeInMB)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             "Unknown"
         }
     }
@@ -83,12 +84,13 @@ class ApkEditorActivity : AppCompatActivity() {
             .show()
     }
 
+    @SuppressLint("UseKtx")
     private fun tryUninstallApp(packageName: String) {
         try {
             val intent = android.content.Intent(android.content.Intent.ACTION_DELETE)
-            intent.data = android.net.Uri.parse("package:$packageName")
+            intent.data = "package:$packageName".toUri()
             startActivity(intent)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Error! :0")
                 .setMessage("Failed to start app uninstallation")
