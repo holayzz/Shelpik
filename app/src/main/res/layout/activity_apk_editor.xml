@@ -11,6 +11,15 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="(WIP)"
+            android:textStyle="bold"
+            android:textColor="@color/text_secondary_dark"
+            android:gravity="center"/>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="| APK Editor |"
@@ -33,7 +42,7 @@
         <ListView
             android:id="@+id/appsListView"
             android:layout_width="match_parent"
-            android:layout_height="540dp"
+            android:layout_height="525dp"
             android:background="@color/surface_light_dark"
             android:divider="@color/surface_dark"
             android:dividerHeight="1dp" />
