@@ -11,8 +11,8 @@ android {
         applicationId = "com.holayzz.github.shelpik"
         minSdk = 28 // bro i forgot its 9.0+, not 10.0+
         targetSdk = 36
-        versionCode = 1
-        versionName = "a0"
+        versionCode = 2
+        versionName = "a1"
     }
 
     buildTypes {
@@ -46,4 +46,5 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation(libs.androidx.material3)
+    implementation("com.google.code.gson:gson:2.13.2")
 }
