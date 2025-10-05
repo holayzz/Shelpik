@@ -12,14 +12,32 @@
         android:layout_centerInParent="true">
 
         <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="| Tweaker |"
-            android:textSize="28sp"
+            android:text="(WIP)"
             android:textStyle="bold"
+            android:textColor="@color/text_secondary_dark"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="ROOT ONLY"
+            android:textColor="@color/text_secondary_dark"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:textColor="@color/text_primary_dark" />
+            android:gravity="center"
+            android:text="| Tweaker |"
+            android:textColor="@color/text_primary_dark"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -63,16 +81,6 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <Button
-            android:id="@+id/btnBack"
-            style="@style/RoundedButton"
-            android:layout_width="345dp"
-            android:layout_height="41dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="← Back"
-            android:textColor="@color/background_dark"
-            android:textSize="16sp" />
 
 
     </LinearLayout>

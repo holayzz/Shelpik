@@ -111,15 +111,19 @@
             android:textColor="@color/text_primary_dark"
             android:layout_marginBottom="16dp" />
 
-        <Button
-            android:id="@+id/btnBack"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="← Back"
-            android:textSize="16sp"
-            style="@style/RoundedButton"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@color/background_dark" />
+            android:layout_height="41dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#62FFFFFF"
+                android:gravity="center"
+                android:text="*this is not release version. check github for release*" />
+        </LinearLayout>
 
     </LinearLayout>
 
