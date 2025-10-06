@@ -7,25 +7,29 @@
 **Shelpik** is a versatile tool for Android that combines the functionality of a macro tool, a tweaker, and an APK editor. The project does not require a high-performance device and works on API 29 and above.
 
 > Simply put, it's just a settings menu in a different shell :)
-> And its my first project on kotlin lol
+---
+
+<img width="2088" height="886" alt="Безымянный(1)" src="https://github.com/user-attachments/assets/02f661f7-5818-40ed-9779-85efe23f0564" />
+
+*on scheenshots version a1-first-macros*
 
 ---
 
-### 📖 About the Project
+### 📖 About the Project--
 
 Shelpik started as a "hodgepodge" of various useful functions for customizing and optimizing Android devices. In one app, you will find:
 
-*   **Macros:** Automation of repetitive actions. - in dev
+*   **Macros:** Automation of repetitive actions. - Done! :D
 *   **Tweaker:** Customizing the system to your liking. - in dev
 *   **APK Editor:** Basic editing and analysis of APK files. - in dev
 
-### ⚙️ Technical Details
+### ⚙️ Technical Details--
 
 *   **Min SDK:** Android 9.0 (API 28)
 *   **Language:** Kotlin
 *   **Dependencies:** Core KTX, AppCompat, Material Design, ConstraintLayout, CardView, Material3
 
-### 🚀 Installation and Build
+### 🚀 Installation and Build--
 
 1.  Clone the repository:
     ```bash
@@ -35,7 +39,11 @@ Shelpik started as a "hodgepodge" of various useful functions for customizing an
 3.  Wait for the Gradle sync to complete.
 4.  Build the APK or run the project on a connected device/emulator.
 
-### 📄 License
+**OR**
+
+1. Download [release](https://github.com/holayzz/Shelpik/releases)
+
+### 📄 License--
 
 This project is distributed under the **MIT License**.
 This means you are free to:
@@ -50,6 +58,7 @@ The full license text is available in the [LICENSE](LICENSE) file.
 
 ---
 
-### 🤝 Acknowledgments
+### 🤝 Acknowledgments!
 
 Thanks to the Open Source community for the inspiration and all the libraries that made this project possible.
+> And its my first project on kotlin lol
