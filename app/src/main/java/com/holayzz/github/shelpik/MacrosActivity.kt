@@ -31,6 +31,7 @@ class MacrosActivity : AppCompatActivity() {
 
         setupUI()
         loadMacros()
+        updateServiceButton()
     }
 
     private fun setupUI() {
@@ -69,7 +70,8 @@ class MacrosActivity : AppCompatActivity() {
         val options = arrayOf(
             if (macro.isEnabled) "Disable" else "Enable",
             "Delete",
-            "Test Now"
+            "Test Now",
+            "Edit"
         )
 
         AlertDialog.Builder(this)
@@ -79,6 +81,7 @@ class MacrosActivity : AppCompatActivity() {
                     0 -> toggleMacro(position)
                     1 -> deleteMacro(position)
                     2 -> testMacro(position)
+                    3 -> editMacro(position)
                 }
             }
             .setNegativeButton("Cancel", null)
