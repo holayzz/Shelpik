@@ -9,9 +9,9 @@
 > Simply put, it's just a settings menu in a different shell :)
 ---
 
-<img width="2088" height="886" alt="Безымянный(1)" src="https://github.com/user-attachments/assets/02f661f7-5818-40ed-9779-85efe23f0564" />
+<img width="2524" height="872" alt="Безымянный" src="https://github.com/user-attachments/assets/951bf810-ef00-41b9-ac1d-d121ec4f35bd" />
 
-*on scheenshots version a1-first-macros*
+*on scheenshots version a2-refactor-n-new-design*
 
 ---
 
