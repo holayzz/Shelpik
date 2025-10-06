@@ -1,200 +1,71 @@
 package com.holayzz.github.shelpik
 
-import android.app.AlertDialog
-import android.content.ComponentName
+import android.app.ActivityManager
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.provider.Settings
-import android.service.quicksettings.TileService
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.Toast
-
-// Data class для хранения макросов
-data class Macro(
-    val id: Long,
-    val name: String,
-    val trigger: String,
-    val action: String,
-    val targetApp: String,
-    val isEnabled: Boolean = true
-)
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import java.util.*
 
 class MacrosActivity : AppCompatActivity() {
 
     private lateinit var macrosListView: ListView
     private lateinit var btnAddMacro: Button
-    private lateinit var btnBack: Button
-    private val macrosList = mutableListOf<Macro>()
-    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var btnServiceControl: Button
+    private lateinit var repository: MacroRepository
+    private lateinit var executor: MacroExecutor
+    private val macros = mutableListOf<Macro>()
+    private lateinit var adapter: MacroAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_macros)
 
-        macrosListView = findViewById(R.id.macrosListView)
-        btnAddMacro = findViewById(R.id.btnAddMacro)
-        btnBack = findViewById(R.id.btnBack)
+        repository = MacroRepository(this)
+        executor = MacroExecutor(this)
 
-        setupListView()
-        setupClickListeners()
+        setupUI()
         loadMacros()
     }
 
-    private fun setupListView() {
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, getMacroDisplayList())
-        macrosListView.adapter = adapter
-    }
+    private fun setupUI() {
+        macrosListView = findViewById(R.id.macrosListView)
+        btnAddMacro = findViewById(R.id.btnAddMacro)
+        btnServiceControl = findViewById(R.id.btnServiceControl) // Теперь находим кнопку из XML
 
-    private fun getMacroDisplayList(): List<String> {
-        return macrosList.map { macro ->
-            val status = if (macro.isEnabled) "✅" else "❌"
-            "$status ${macro.name}\nTrigger: ${macro.trigger} → Action: ${macro.action}"
-        }
-    }
+        btnServiceControl.setOnClickListener { toggleMacroService() }
 
-    private fun setupClickListeners() {
-        btnAddMacro.setOnClickListener {
-            showTriggerSelectionDialog()
-        }
-
-        btnBack.setOnClickListener {
-            finish()
-        }
-
-        macrosListView.setOnItemClickListener { _, _, position, _ ->
+        adapter = MacroAdapter(macros) { position ->
             showMacroOptionsDialog(position)
         }
+        macrosListView.adapter = adapter
+
+        btnAddMacro.setOnClickListener { showTriggerSelectionDialog() }
+        updateServiceButton()
     }
 
-    private fun showTriggerSelectionDialog() {
-        val triggers = arrayOf(
-            "📱 App Launched",
-            "🔌 Phone Unlocked",
-            "🔋 Power Connected",
-            "🌐 WiFi Connected",
-            "⏰ Specific Time",
-            "🎯 Screen Tap (Auto-clicker)",
-            "🎨 Color Detected"
-        )
-
-        AlertDialog.Builder(this)
-            .setTitle("Select Trigger")
-            .setItems(triggers) { _, which ->
-                when (which) {
-                    0 -> showAppSelectionDialog("app_launch")
-                    1 -> showActionSelectionDialog("phone_unlock")
-                    2 -> showActionSelectionDialog("power_connected")
-                    3 -> showActionSelectionDialog("wifi_connected")
-                    4 -> showTimeSelectionDialog()
-                    5 -> showAutoClickerDialog()
-                    6 -> showColorDetectionDialog()
-                }
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
-    private fun showAppSelectionDialog(triggerType: String) {
-        val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-        val appNames = apps.map { packageManager.getApplicationLabel(it).toString() }
-
-        AlertDialog.Builder(this)
-            .setTitle("Select App for Trigger")
-            .setItems(appNames.toTypedArray()) { _, which ->
-                val selectedApp = apps[which]
-                showActionSelectionDialog(triggerType, selectedApp.packageName)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
-    private fun showActionSelectionDialog(triggerType: String, targetApp: String? = null) {
-        val actions = arrayOf(
-            "❌ Close App",
-            "📞 Call Number",
-            "🔔 Show Notification",
-            "🌐 Open Website",
-            "📱 Launch App",
-            "🔊 Play Sound",
-            "⚡ Toggle Settings"
-        )
-
-        AlertDialog.Builder(this)
-            .setTitle("Select Action")
-            .setItems(actions) { _, which ->
-                val action = when (which) {
-                    0 -> "close_app"
-                    1 -> "call_number"
-                    2 -> "show_notification"
-                    3 -> "open_website"
-                    4 -> "launch_app"
-                    5 -> "play_sound"
-                    6 -> "toggle_settings"
-                    else -> "close_app"
-                }
-
-                createMacro(triggerType, action, targetApp ?: "")
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
-    private fun createMacro(triggerType: String, action: String, targetApp: String) {
-        val triggerName = when (triggerType) {
-            "app_launch" -> "App Launched"
-            "phone_unlock" -> "Phone Unlocked"
-            "power_connected" -> "Power Connected"
-            "wifi_connected" -> "WiFi Connected"
-            else -> "Custom Trigger"
-        }
-
-        val actionName = when (action) {
-            "close_app" -> "Close App"
-            "call_number" -> "Call Number"
-            "show_notification" -> "Show Notification"
-            "open_website" -> "Open Website"
-            "launch_app" -> "Launch App"
-            "play_sound" -> "Play Sound"
-            "toggle_settings" -> "Toggle Settings"
-            else -> "Custom Action"
-        }
-
-        val appName = if (targetApp.isNotEmpty()) {
-            try {
-                val appInfo = packageManager.getApplicationInfo(targetApp, 0)
-                packageManager.getApplicationLabel(appInfo).toString()
-            } catch (e: Exception) {
-                "System"
-            }
-        } else {
-            "System"
-        }
-
-        val macroName = "$triggerName → $actionName"
-
-        val macro = Macro(
-            id = System.currentTimeMillis(),
-            name = macroName,
-            trigger = triggerType,
-            action = action,
-            targetApp = targetApp
-        )
-
-        macrosList.add(macro)
-        adapter.clear()
-        adapter.addAll(getMacroDisplayList())
+    private fun loadMacros() {
+        macros.clear()
+        macros.addAll(repository.loadMacros())
         adapter.notifyDataSetChanged()
 
-        Toast.makeText(this, "Macro created!", Toast.LENGTH_SHORT).show()
+        if (macros.isEmpty()) {
+            Toast.makeText(this, "No macros yet. Tap 'Add New Macro' to create one!", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun showMacroOptionsDialog(position: Int) {
-        val macro = macrosList[position]
+        if (position < 0 || position >= macros.size) {
+            Toast.makeText(this, "Invalid macro selection", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val macro = macros[position]
         val options = arrayOf(
             if (macro.isEnabled) "Disable" else "Enable",
             "Delete",
@@ -202,7 +73,7 @@ class MacrosActivity : AppCompatActivity() {
         )
 
         AlertDialog.Builder(this)
-            .setTitle("Macro Options")
+            .setTitle("Macro Options: ${macro.name}")
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> toggleMacro(position)
@@ -215,94 +86,189 @@ class MacrosActivity : AppCompatActivity() {
     }
 
     private fun toggleMacro(position: Int) {
-        macrosList[position] = macrosList[position].copy(isEnabled = !macrosList[position].isEnabled)
-        adapter.clear()
-        adapter.addAll(getMacroDisplayList())
+        if (position < 0 || position >= macros.size) return
+
+        // Toggle the macro in the current list
+        macros[position] = macros[position].copy(isEnabled = !macros[position].isEnabled)
+
+        // Save the updated list
+        repository.saveMacros(macros)
+
+        // Update the adapter
         adapter.notifyDataSetChanged()
+
+        val state = if (macros[position].isEnabled) "enabled" else "disabled"
+        Toast.makeText(this, "Macro $state", Toast.LENGTH_SHORT).show()
     }
 
     private fun deleteMacro(position: Int) {
-        macrosList.removeAt(position)
-        adapter.clear()
-        adapter.addAll(getMacroDisplayList())
-        adapter.notifyDataSetChanged()
+        if (position < 0 || position >= macros.size) return
+
+        val macroName = macros[position].name
+
+        AlertDialog.Builder(this)
+            .setTitle("Delete Macro")
+            .setMessage("Are you sure you want to delete '$macroName'?")
+            .setPositiveButton("Delete") { _, _ ->
+                // Remove from current list
+                macros.removeAt(position)
+
+                // Save the updated list
+                repository.saveMacros(macros)
+
+                // Update the adapter
+                adapter.notifyDataSetChanged()
+
+                Toast.makeText(this, "Macro deleted", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     private fun testMacro(position: Int) {
-        val macro = macrosList[position]
-        executeMacroAction(macro)
-        Toast.makeText(this, "Testing macro: ${macro.name}", Toast.LENGTH_SHORT).show()
+        if (position < 0 || position >= macros.size) return
+
+        val macro = macros[position]
+        executor.executeMacro(macro)
+        Toast.makeText(this, "Testing: ${macro.name}", Toast.LENGTH_SHORT).show()
     }
 
-    private fun executeMacroAction(macro: Macro) {
-        when (macro.action) {
-            "close_app" -> closeApp(macro.targetApp)
-            "call_number" -> callNumber("+1234567890") // Default number
-            "show_notification" -> showNotification("Macro Test", "Macro executed successfully!")
-            "open_website" -> openWebsite("https://google.com")
-            // TODO: Implement other actions
-        }
+    private fun createMacro(triggerType: String, action: String, targetApp: String, extraData: String? = null) {
+        val macro = Macro(
+            name = "Custom Macro",
+            trigger = triggerType,
+            action = action,
+            targetApp = targetApp,
+            extraData = extraData
+        )
+
+        // Add to current list
+        macros.add(macro)
+
+        // Save the updated list
+        repository.saveMacros(macros)
+
+        // Update the adapter
+        adapter.notifyDataSetChanged()
+
+        Toast.makeText(this, "Macro created!", Toast.LENGTH_SHORT).show()
     }
 
-    private fun closeApp(packageName: String) {
-        try {
-            // Try to force stop the app
-            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            intent.data = android.net.Uri.parse("package:$packageName")
-            startActivity(intent)
+    // ... rest of your methods (showTriggerSelectionDialog, showAppSelectionDialog, etc.)
+    private fun showTriggerSelectionDialog() {
+        val triggers = arrayOf(
+            "App Launched (WIP)",
+            "Phone Unlocked (WORK)",
+            "Power Connected (WORK)",
+            "Power Disconnected (WORK)",
+            "Screen On (WORK)",
+            "Headset Connected (UNTESTED)",
+            "Headset Disconnected (UNTESTED)",
+            "Specific Time (UNTESTED)"
+        )
 
-            // Alternative method using activity manager (requires system permission)
-            // val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-            // activityManager.killBackgroundProcesses(packageName)
-
-            Toast.makeText(this, "Attempting to close app", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Toast.makeText(this, "Cannot close system app", Toast.LENGTH_SHORT).show()
-        }
+        AlertDialog.Builder(this)
+            .setTitle("Select Trigger")
+            .setItems(triggers) { _, which ->
+                when (which) {
+                    0 -> showAppSelectionDialog(TriggerTypes.APP_LAUNCH)
+                    1 -> showActionSelectionDialog(TriggerTypes.PHONE_UNLOCK)
+                    2 -> showActionSelectionDialog(TriggerTypes.POWER_CONNECTED)
+                    3 -> showActionSelectionDialog(TriggerTypes.POWER_DISCONNECTED)
+                    4 -> showActionSelectionDialog(TriggerTypes.SCREEN_ON)
+                    5 -> showActionSelectionDialog(TriggerTypes.HEADSET_CONNECTED)
+                    6 -> showActionSelectionDialog(TriggerTypes.HEADSET_DISCONNECTED)
+                    7 -> showTimeSelectionDialog()
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
-    private fun callNumber(phoneNumber: String) {
-        try {
-            val intent = Intent(Intent.ACTION_CALL)
-            intent.data = android.net.Uri.parse("tel:$phoneNumber")
-            startActivity(intent)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Cannot make call", Toast.LENGTH_SHORT).show()
-        }
+    private fun showAppSelectionDialog(triggerType: String) {
+        val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        val appNames = apps.map {
+            "📱 ${packageManager.getApplicationLabel(it)}"
+        }.toTypedArray()
+
+        AlertDialog.Builder(this)
+            .setTitle("Select App for Trigger")
+            .setItems(appNames) { _, which ->
+                val selectedApp = apps[which]
+                showActionSelectionDialog(triggerType, selectedApp.packageName)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
-    private fun showNotification(title: String, message: String) {
-        // Simple toast notification for now
-        Toast.makeText(this, "$title: $message", Toast.LENGTH_LONG).show()
+    private fun showActionSelectionDialog(triggerType: String, targetApp: String = "") {
+        val actions = arrayOf(
+            "Close App (ROOT)",
+            "Call Number (NON-ROOT)",
+            "Show Notification (NON-ROOT)",
+            "Open Website (NON-ROOT)",
+            "Launch App (WIP)",
+            "Toggle Settings (ROOT)",
+            "Vibrate (NON-ROOT)",
+            "Send Broadcast (ROOT?)"
+        )
+
+        AlertDialog.Builder(this)
+            .setTitle("Select Action")
+            .setItems(actions) { _, which ->
+                val action = when (which) {
+                    0 -> ActionTypes.CLOSE_APP
+                    1 -> ActionTypes.CALL_NUMBER
+                    2 -> ActionTypes.SHOW_NOTIFICATION
+                    3 -> ActionTypes.OPEN_WEBSITE
+                    4 -> ActionTypes.LAUNCH_APP
+                    5 -> ActionTypes.TOGGLE_SETTINGS
+                    6 -> ActionTypes.VIBRATE
+                    7 -> ActionTypes.SEND_BROADCAST
+                    else -> ActionTypes.SHOW_NOTIFICATION
+                }
+                showActionConfigurationDialog(triggerType, action, targetApp)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
-    private fun openWebsite(url: String) {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))
-            startActivity(intent)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Cannot open website", Toast.LENGTH_SHORT).show()
-        }
+    private fun showActionConfigurationDialog(triggerType: String, action: String, targetApp: String) {
+        val configurator = ActionConfigurator(this, triggerType, action, targetApp, ::createMacro)
+        configurator.configure()
     }
 
-    // TODO: Implement these dialog methods
     private fun showTimeSelectionDialog() {
-        Toast.makeText(this, "Time selection coming soon!", Toast.LENGTH_SHORT).show()
+        val calendar = Calendar.getInstance()
+        TimePickerDialog(this, { _, hour, minute ->
+            val timeString = String.format("%02d:%02d", hour, minute)
+            createMacro(TriggerTypes.SPECIFIC_TIME, ActionTypes.SHOW_NOTIFICATION, "", "Time: $timeString")
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
     }
 
-    private fun showAutoClickerDialog() {
-        Toast.makeText(this, "Auto-clicker coming soon!", Toast.LENGTH_SHORT).show()
+    private fun toggleMacroService() {
+        val serviceIntent = Intent(this, MacroService::class.java)
+        if (isServiceRunning()) {
+            stopService(serviceIntent)
+            Toast.makeText(this, "Service stopped", Toast.LENGTH_SHORT).show()
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent)
+            } else {
+                startService(serviceIntent)
+            }
+            Toast.makeText(this, "Service started", Toast.LENGTH_SHORT).show()
+        }
+        updateServiceButton()
     }
 
-    private fun showColorDetectionDialog() {
-        Toast.makeText(this, "Color detection coming soon!", Toast.LENGTH_SHORT).show()
+    private fun isServiceRunning(): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        return manager.getRunningServices(Int.MAX_VALUE)
+            .any { it.service.className == MacroService::class.java.name }
     }
 
-    private fun loadMacros() {
-        // TODO: Load macros from SharedPreferences or database
-    }
-
-    private fun saveMacros() {
-        // TODO: Save macros to SharedPreferences or database
+    private fun updateServiceButton() {
+        btnServiceControl.text = if (isServiceRunning()) "Stop Service" else "Start Service"
     }
 }
