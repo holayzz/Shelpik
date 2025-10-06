@@ -18,11 +18,7 @@ class TweakerActivity : AppCompatActivity() {
 
         btnEnableDevOptions.setOnClickListener {
             enableDeveloperOptions()
-            tvStatus.text = "Dev settings activated!\nGo to settings myboy."
-        }
-        val btnBack = findViewById<Button>(R.id.btnBack)
-        btnBack.setOnClickListener {
-            finish()
+            tvStatus.text = "Dev settings activated!\nGo to settings myboy. (preview)"
         }
     }
 

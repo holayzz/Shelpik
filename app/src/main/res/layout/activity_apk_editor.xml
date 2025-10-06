@@ -5,6 +5,11 @@
     android:background="@color/background_dark"
     android:padding="16dp">
 
+    <com.holayzz.github.shelpik.SnowfallView
+        android:id="@+id/snowfallView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,13 +17,22 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="| APK Editor |"
-            android:textSize="28sp"
-            android:textStyle="bold"
+            android:layout_height="48dp"
             android:gravity="center"
-            android:layout_marginBottom="24dp"
-            android:textColor="@color/white" />
+            android:text="APK Editor"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Edit your apps and APK."
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/text_secondary_dark"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvEmpty"
@@ -33,20 +47,10 @@
         <ListView
             android:id="@+id/appsListView"
             android:layout_width="match_parent"
-            android:layout_height="540dp"
+            android:layout_height="575dp"
             android:background="@color/surface_light_dark"
             android:divider="@color/surface_dark"
             android:dividerHeight="1dp" />
-
-        <Button
-            android:id="@+id/btnBack"
-            style="@style/RoundedButton"
-            android:layout_width="364dp"
-            android:layout_height="41dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="← Back"
-            android:textColor="@color/background_dark"
-            android:textSize="16sp" />
 
     </LinearLayout>
 
